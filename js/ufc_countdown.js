@@ -6,7 +6,7 @@ $(document).ready(function() {
   // wire up 
   setupListofEvents(events);
   
-  setupCurrentEvent(events[5]);
+  setupCurrentEvent(events[0]);
   
 });
 
