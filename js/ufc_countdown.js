@@ -6,7 +6,7 @@ $(document).ready(function() {
   // wire up 
   setupListofEvents(events);
   
-  setupCurrentEvent(events[0]);
+  setupCurrentEvent(events[3]);
 
   // list click events
   $("#event_list li a").click(function() {
@@ -26,7 +26,6 @@ var setupListofEvents = function(events){
 	var list_txt = "";
 
 	$.each(events,function(index,event) {
-		console.log(event);
 		list_txt += '<li> <a href="#" id="' + index +'" >' + event.title + '</a></li>\n';
 	});
 
@@ -41,9 +40,13 @@ var setupCurrentEvent = function(event) {
 	total_txt += "<br>"
 	total_txt += event.tagline;
 	$("#fight_title").html(total_txt);
-    
+
+	// setup page title
+    var page_title = "Countdown to ";
+    page_title += event.title + " " + event.tagline;
+    document.title = page_title;
+
     // setup image
-    console.log(event.img_url);
     $("#fight_image").attr({src:event.img_url});
 	
 	// setup countdown
@@ -52,12 +55,33 @@ var setupCurrentEvent = function(event) {
 
 var setupCountdownTimer = function(event) {
 
-	var event_date = event.date;
-	var event_time = event.time;
+	var event_date = new Date(event.date);
+	var real_date = new Date(event_date.getFullYear(),event_date.getMonth(),event_date.getDay());
+    var some_date = new Date();
+    some_date.setDate(some_date.getDate() + 5);
 
-	console.log(event_date);
-	console.log(event_time);
+	console.log("some.date");
+	console.log(some_date);
 
-	var event_txt = event_date + "<br>" + event_time;
-	$("#countdown").html(event_txt);
+	var note = $("#note");
+	
+	
+	$("#countdown").countdown({
+		timestamp:some_date,
+		callback : function(days,hours,minutes,seconds) {
+
+			var message = "";
+			message += days + " day" + ( days==1 ? '':'s' ) + ", ";
+            message += hours + " hour" + ( hours==1 ? '':'s' ) + " ";
+
+            message += "left until this event";
+
+            note.html(message);
+            console.log(message);
+
+
+		}
+	});
+
+
 };
