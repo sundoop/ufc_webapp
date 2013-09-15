@@ -6,13 +6,8 @@ $(document).ready(function() {
   // wire up 
   setupListofEvents(events);
   
-  setupCurrentEvent(events[3]);
-
-  // list click events
-  $("#event_list li a").click(function() {
-  	//alert('clicked event:' + this.id);
-  	setupCurrentEvent(events[this.id]);
-  });
+  setupCurrentEvent(events[5]);
+  
 });
 
 
@@ -29,7 +24,12 @@ var setupListofEvents = function(events){
 		list_txt += '<li> <a href="#" id="' + index +'" >' + event.title + '</a></li>\n';
 	});
 
-	$("#event_list").html(list_txt);
+	$("#upcoming_fights").html(list_txt);
+
+	$("#upcoming_fights li a").click(function() {
+  	//alert('clicked event:' + this.id);
+  	setupCurrentEvent(events[this.id]);
+  });
 };
 
 var setupCurrentEvent = function(event) {
@@ -37,7 +37,7 @@ var setupCurrentEvent = function(event) {
     // setup title
 	var total_txt = "";
 	total_txt += event.title;
-	total_txt += "<br>"
+	total_txt += " : "
 	total_txt += event.tagline;
 	$("#fight_title").html(total_txt);
 
@@ -55,33 +55,31 @@ var setupCurrentEvent = function(event) {
 
 var setupCountdownTimer = function(event) {
 
-	var event_date = new Date(event.date);
-	var real_date = new Date(event_date.getFullYear(),event_date.getMonth(),event_date.getDay());
-    var some_date = new Date();
-    some_date.setDate(some_date.getDate() + 5);
-
-	console.log("some.date");
-	console.log(some_date);
-
-	var note = $("#note");
+	// clear counter
+	$("#countdown").html = "";
+	var event_date = getEventDate(event);
+	var timeto_obj = {theme:"black",displayCaptions: true,timeTo:event_date, displayDays:2};
+	$("#countdown").timeTo(timeto_obj);
 	
 	
-	$("#countdown").countdown({
-		timestamp:some_date,
-		callback : function(days,hours,minutes,seconds) {
+};
 
-			var message = "";
-			message += days + " day" + ( days==1 ? '':'s' ) + ", ";
-            message += hours + " hour" + ( hours==1 ? '':'s' ) + " ";
+var getEventDate = function(event) {
+	var temp_date = new Date(event.date);
+	var e_time = getEventTimeValue(event.time);
+	var e_date = temp_date.getDate();
+	var e_month = temp_date.getMonth();
+	var e_year = "2013";
 
-            message += "left until this event";
+	var event_date = new Date(e_year,e_month,e_date,e_time);
+	return event_date;
+};
 
-            note.html(message);
-            console.log(message);
+var getEventTimeValue = function(event_time) {
 
+	// PST
+	var time_val = event_time.split("/")[0];
+	var time_num = time_val.match(/\d+/)[0];
 
-		}
-	});
-
-
+	return 12 + parseInt(time_num);
 };
