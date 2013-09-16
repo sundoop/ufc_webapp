@@ -8,6 +8,11 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 
+ html{
+    background-color:#000;
+ }
+ }
+
 .clearfix {
   *zoom: 1;
 }
@@ -6119,7 +6124,7 @@ a.badge:focus {
 
 .hero-unit {
   height: 9000px;
-  padding: 160px;
+  padding: 60px;
   /*margin-bottom: 30px;*/
   font-size: 18px;
   font-weight: 200;
