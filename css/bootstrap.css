@@ -4370,7 +4370,7 @@ input[type="submit"].btn.btn-mini {
 .navbar {
   *position: relative;
   *z-index: 2;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   overflow: visible;
 }
 
@@ -6124,7 +6124,7 @@ a.badge:focus {
 
 .hero-unit {
   height: 9000px;
-  padding: 60px;
+  padding: 100px;
   /*margin-bottom: 30px;*/
   font-size: 18px;
   font-weight: 200;
